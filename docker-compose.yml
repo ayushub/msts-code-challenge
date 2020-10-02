@@ -1,0 +1,69 @@
+version: '3.5'
+services:
+
+  mocked-services:
+    image: node:12-alpine
+    command: node services.js
+    working_dir: /app
+    stop_signal: SIGKILL
+    environment:
+      AUTH_TOKEN_EXPIRY: ${AUTH_TOKEN_EXPIRY:-15}
+      DATA_FILE: data.json
+    volumes:
+      - ./mocked-services.js:/app/services.js
+      - ./mocked-data.json:/app/data.json
+  
+  database:
+    image: postgres:10.6-alpine
+    stop_signal: SIGKILL
+    environment:
+      POSTGRES_USER: dispute_center
+      POSTGRES_PASSWORD: pwd01!
+    volumes:
+      - ./postgres-schema.sql:/docker-entrypoint-initdb.d/01.sql
+      - ./postgres-seed-data.sql:/docker-entrypoint-initdb.d/02.sql
+    tmpfs: 
+      # Use tmpfs so we start out with clean database with each container restart 
+      - /var/lib/postgresql/data
+    ports:
+      # Change the left port number if you already have a postgres database running locally
+      - '5432:5432'
+
+  backend:
+    image: node:12-alpine
+    depends_on:
+      - mocked-services
+      - database
+    working_dir: /app
+    # Enable debugging for the backend
+    command: yarn start --inspect=0.0.0.0:9229
+    stop_signal: SIGKILL
+    environment:
+      AUTHENTICATION_SERVICE_BASE_URL: http://mocked-services:2000
+      TRANSACTIONS_SERVICE_BASE_URL: http://mocked-services:2000
+      PGHOST: database
+      PGUSER: dispute_center
+      PGPASSWORD: pwd01!
+      PGDATABASE: dispute_center
+    volumes:
+      - ./backend:/app
+    ports:
+      # Expose node debugging port to host
+      - '9229:9229'
+
+  frontend:
+    image: node:12-alpine
+    depends_on:
+      - mocked-services
+      - backend
+    working_dir: /app
+    command: yarn start
+    stop_signal: SIGKILL
+    environment:
+      AUTHENTICATION_SERVICE_BASE_URL: http://mocked-services:2000
+      TRANSACTIONS_SERVICE_BASE_URL: http://mocked-services:2000
+      DISPUTE_CENTER_SERVICE_BASE_URL: http://backend:3000
+    volumes:
+      - ./frontend:/app
+    ports:
+      - '8080:8080'

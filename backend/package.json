@@ -1,0 +1,21 @@
+{
+  "name": "dispute-center-backend",
+  "version": "1.0.0",
+  "description": "Contains the dispute center API / backend code",
+  "main": "src/main.js",
+  "scripts": {
+    "prestart": "yarn install",
+    "start": "nodemon -w src"
+  },
+  "repository": "https://gitlab.com/msts-code-challenges/dispute-center",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "pg": "^8.3.3"
+  }
+}

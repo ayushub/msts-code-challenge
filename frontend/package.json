@@ -1,0 +1,18 @@
+{
+  "name": "dispute-center-frontend",
+  "version": "1.0.0",
+  "description": "Contains the dispute center UI / frontend code and assets",
+  "main": "serve.js",
+  "scripts": {
+    "prestart": "yarn install",
+    "start": "nodemon -w \"${STATIC_ASSETS_DIRECTORY:-src}\" -e \"*\""
+  },
+  "repository": "https://gitlab.com/msts-code-challenges/dispute-center",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "express": "^4.17.1",
+    "http-proxy-middleware": "^1.0.5",
+    "nodemon": "^2.0.4"
+  }
+}

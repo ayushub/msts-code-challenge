@@ -1,0 +1,94 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Dispute Center transaction actions</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <main>
+        <h1>Transaction: <span id="transaction-id"></span></h1>
+        <table class="pivoted">
+            <tr>
+                <td>Date</td>
+                <td id="transaction-date"></td>
+            </tr>
+            <tr>
+                <td>Account</td>
+                <td id="transaction-account"></td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td id="transaction-description"></td>
+            </tr>
+            <tr>
+                <td>Amount</td>
+                <td id="transaction-amount"></td>
+            </tr>
+            <tr>
+                <td>Dispute Status</td>
+                <td id="transaction-dispute-status"></td>
+            </tr>
+            <tr>
+                <td>Dispute Reason</td>
+                <td id="transaction-dispute-reason"></td>
+            </tr>
+        </table>
+
+        <div id="dispute-log" class="hidden">
+            <h1>Dispute Log</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Date</td>
+                        <td>User ID</td>
+                        <td>Status</td>
+                    </tr>
+                </thead>
+                <tbody id="dispute-log-rows">
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="../app.js"></script>
+    <script>
+        ifAuthenticated(async () => {
+            const id = /(\?|&)transaction_id=([^&]*)/.exec(document.location)[2];
+            const { transaction, dispute_status_log } = await apiRequest('GET', `/api/dispute-center/transactions/${id}`);
+
+            // Bind values to transaction details table
+            for (const [element, value] of [
+                ['id',              transaction.id],
+                ['date',            transaction.time.substr(0, 10)],
+                ['account',         transaction.account_id],
+                ['description',     transaction.description],
+                ['amount',          (transaction.amount / 100).toFixed(2)],
+                ['dispute-status',  transaction.disputeStatus || ''],
+                ['dispute-reason',  transaction.disputeReason || ''],
+            ]) {
+                document.getElementById(`transaction-${element}`).innerText = value;
+            }
+
+            // Show dispute status log section only if there are any entries
+            if (dispute_status_log.length > 0) {
+                document.getElementById('dispute-log').classList.remove('hidden');
+                // Bind values to dispute status log table
+                let html = '';
+                for (const l of dispute_status_log) {
+                    html +=
+                        `<tr>` +
+                            `<td>${l.time.substr(0, 10)}</td>` +
+                            `<td>${l.user_id}</td>` +
+                            `<td>${l.status}</td>` +
+                        `</tr>`;
+                }
+                document.getElementById('dispute-log-rows').innerHTML = html;
+            }
+        });
+
+    </script>
+</body>
+
+</html>

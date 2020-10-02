@@ -1,0 +1,29 @@
+{
+    "users": [
+        { "id": "U2345326336", "username": "khatrick6",    "$password": "pwd05!", "role": "Admin",     "account_ids": [] },
+        { "id": "U6656533455", "username": "dbradick2",    "$password": "pwd13!", "role": "Purchaser", "account_ids": ["A6643344311"] },
+        { "id": "U2136324354", "username": "rstephenson5", "$password": "pwd26!", "role": "Purchaser", "account_ids": ["A7864323344"] }
+    ],
+    "transactions": [
+        { "id": "T7690848020", "account_id": "A6643344311", "time": "2020-09-30T22:30:00Z", "amount": -43400, "description": "Purchase at Latz" },
+        { "id": "T1656871691", "account_id": "A6643344311", "time": "2020-09-30T21:15:00Z", "amount": -14030, "description": "Purchase at Riffpedia" },
+        { "id": "T8946292454", "account_id": "A6643344311", "time": "2020-09-30T14:04:00Z", "amount": -4100,  "description": "Purchase at Camido" },
+        { "id": "T2791275419", "account_id": "A7864323344", "time": "2020-09-28T21:01:00Z", "amount": -5301,  "description": "Purchase at Jabberbean" },
+        { "id": "T2020496808", "account_id": "A7864323344", "time": "2020-09-28T02:43:00Z", "amount": -66400, "description": "Purchase at Oyoloo" },
+        { "id": "T3857987029", "account_id": "A7864323344", "time": "2020-09-26T15:31:00Z", "amount": -5500,  "description": "Purchase at Omba" },
+        { "id": "T2366135632", "account_id": "A6643344311", "time": "2020-09-23T04:10:00Z", "amount": -760,   "description": "Purchase at Jaxnation" },
+        { "id": "T4614875505", "account_id": "A7864323344", "time": "2020-09-23T04:03:00Z", "amount": -7990,  "description": "Purchase at Teklist" },
+        { "id": "T6811621062", "account_id": "A7864323344", "time": "2020-09-23T03:59:00Z", "amount": 215403, "description": "Payment" },
+        { "id": "T9730252182", "account_id": "A6643344311", "time": "2020-09-19T22:01:00Z", "amount": 5400,   "description": "Credit T8920719059" },
+        { "id": "T4879943335", "account_id": "A7864323344", "time": "2020-09-16T13:46:00Z", "amount": -10004, "description": "Purchase at Voolith" },
+        { "id": "T1183279285", "account_id": "A7864323344", "time": "2020-09-16T04:23:00Z", "amount": -4304,  "description": "Purchase at Eimbee" },
+        { "id": "T8920719059", "account_id": "A6643344311", "time": "2020-09-11T22:44:00Z", "amount": -5400,  "description": "Purchase at Realcube" },
+        { "id": "T1242482344", "account_id": "A7864323344", "time": "2020-09-11T01:23:00Z", "amount": -44200, "description": "Purchase at Voolith" },
+        { "id": "T1138691875", "account_id": "A6643344311", "time": "2020-09-10T05:04:00Z", "amount": 95042,  "description": "Payment" },
+        { "id": "T4742875580", "account_id": "A7864323344", "time": "2020-09-09T03:56:00Z", "amount": -5500,  "description": "Purchase at Divavu" },
+        { "id": "T5875325138", "account_id": "A7864323344", "time": "2020-09-08T15:41:00Z", "amount": -95300, "description": "Purchase at Flipstorm" },
+        { "id": "T5138447790", "account_id": "A6643344311", "time": "2020-09-08T14:01:00Z", "amount": -700,   "description": "Purchase at Zoomzone" },
+        { "id": "T4857119814", "account_id": "A7864323344", "time": "2020-09-02T00:03:00Z", "amount": -4400,  "description": "Purchase at Quimm" },
+        { "id": "T2413856694", "account_id": "A7864323344", "time": "2020-09-01T23:33:00Z", "amount": -1043,  "description": "Purchase at Divavu" }
+    ]
+}

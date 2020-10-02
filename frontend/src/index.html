@@ -1,0 +1,52 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Dispute Center transaction overview</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <main>
+        <h1>Transactions</h1>
+        <table>
+            <thead>
+                <tr>
+                    <td>T#</td>
+                    <td>Date</td>
+                    <td>Account</td>
+                    <td>Description</td>
+                    <td>Amount</td>
+                    <td>Dispute Status</td>
+                    <td><!-- Action / View --></td>
+                </tr>
+            </thead>
+            <tbody id="transactions-rows">
+            </tbody>
+        </table>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        ifAuthenticated(async () => {
+            const { transactions } = await apiRequest('GET', '/api/dispute-center/transactions');
+            let html = '';
+            for (const t of transactions) {
+                html +=
+                    `<tr>` +
+                        `<td>${t.id}</td>` +
+                        `<td>${t.time.substr(0, 10)}</td>` +
+                        `<td>${t.account_id}</td>` +
+                        `<td>${t.description}</td>` +
+                        `<td>${(t.amount / 100).toFixed(2)}</td>` +
+                        `<td>${t.disputeStatus || ''}</td>` +
+                        `<td><a href="dispute?transaction_id=${t.id}">Action / View</a></td>` +
+                    `</tr>`;
+            }
+            document.getElementById('transactions-rows').innerHTML = html;
+        });
+    </script>
+</body>
+
+</html>
