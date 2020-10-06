@@ -50,7 +50,7 @@ async function apiRequest(method, url, body) {
         body = JSON.stringify(body);
     }
 
-    const response = await fetch(url, { headers, body });
+    const response = await fetch(url, { method, headers, body });
     if (response.ok) {
         return response.json();
     }

@@ -8,6 +8,7 @@ const {
 
 const server =
     express()
+        .use(express.json())
         .use(require('./middlewares/api-clients')({
             serviceBaseUrls: {
                 authentication: AUTHENTICATION_SERVICE_BASE_URL,
