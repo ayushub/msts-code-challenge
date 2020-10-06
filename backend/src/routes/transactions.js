@@ -14,7 +14,7 @@ routes.get('/api/dispute-center/transactions', async (request, response, next) =
             transactions: transactions
                 .map(transaction => ({
                     transaction,
-                    dispute: disputes.find(d => d.transaction_id === transaction.id) || {}
+                    dispute: disputes.find(d => d.transaction_id === transaction.id) || {}
                 }))
                 .map(({ transaction, dispute }) => ({
                     ...transaction,
@@ -31,7 +31,7 @@ routes.get('/api/dispute-center/transactions', async (request, response, next) =
 routes.get('/api/dispute-center/transactions/:id', async (request, response, next) => {
     try {
         const transaction = await request.services.transactions('GET', `/api/transactions/${request.params.id}`);
-        const dispute = await models.disputes.getByTransactionId(transaction.id, { includeStatusLog: true }) || {};
+        const dispute = await models.disputes.getByTransactionId(transaction.id, { includeStatusLog: true }) || {};
 
         response.json({
             transaction: {
@@ -39,7 +39,7 @@ routes.get('/api/dispute-center/transactions/:id', async (request, response, nex
                 disputeStatus: dispute.status,
                 disputeReason: dispute.reason,
             },
-            dispute_status_log: dispute.status_log || []
+            dispute_status_log: dispute.status_log || []
         });
     }
     catch (error) {

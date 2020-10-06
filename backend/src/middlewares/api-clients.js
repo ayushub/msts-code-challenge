@@ -21,7 +21,7 @@ function apiClients(options) {
     return function (request, response, next) {
         request.services =
             Object.assign(
-                request.services || {},
+                request.services || {},
                 ...Object
                     .entries(serviceBaseUrls)
                     .map(([name, baseUrl]) => ({

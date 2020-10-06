@@ -82,7 +82,7 @@ async function handleRequest(request, response) {
     return;
 
     function verifyAuthorizationHeader(value) {
-        let token = decrypt((/^Bearer (.*)$/.exec(value || '') || [])[1]), user;
+        let token = decrypt((/^Bearer (.*)$/.exec(value || '') || [])[1]), user;
         if (!token ||
             (token = JSON.parse(token)).expires < Date.now() ||
             (user = data.users.find(u => u.id === token.id)) == null) {
@@ -94,22 +94,22 @@ async function handleRequest(request, response) {
 
     function getUserAndToken(user) {
         const issued = Date.now();
-        const expires = issued + (parseInt(AUTH_TOKEN_EXPIRY) || 15)*60*1000;
+        const expires = issued + (parseInt(AUTH_TOKEN_EXPIRY) || 15)*60*1000;
         return (user && {
             user,
             token: encrypt(JSON.stringify({ id: user.id, issued, expires })),
             token_issued: issued,
             token_expires: expires,
-         }) || {};
+         }) || {};
     }
 
     function getTransactions(user, filter) {
-        filter = filter || {}
+        filter = filter || {}
         if (user.role !== 'Admin') {
             filter.account_ids = (filter.account_ids || user.account_ids).filter(a => user.account_ids.indexOf(a) >= 0);
         }
         return data.transactions.filter(t =>
-            (filter.id == null || filter.id === t.id) && 
+            (filter.id == null || filter.id === t.id) &&
             (filter.account_ids == null || filter.account_ids.indexOf(t.account_id) >= 0));
     }
 

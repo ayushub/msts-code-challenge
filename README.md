@@ -1,6 +1,6 @@
 # Dispute Center Code Challenge
 
-The application you will be working on is for handling disputes financial transactions.  
+The application you will be working on is for handling disputes of financial transactions.  
 Users should be able to log in and see their recent transactions and choose to submit a dispute for example a fraudulent purchase.  
 Disputes will then be either accepted or rejected by a Admin users.
 
@@ -35,11 +35,12 @@ credentials:
 | rstephenson5 | pwd26!   | Purchaser |
 
 
-The database is setup by the `docker-compose.yml` confiugration and is seeded with two dispute records for the `dbradick2` user (see `postgres-seed-data.sql`.) Database schema is defined in `postgres-schema.sql` and the container is configured with `tmpfs` for the data directory so that the database is recreated between each restart. This was done to make sure we have an up to date schema running in the database. If you don't like this behaviour just remove the `tmpfs` configuration.
+_Note:  
+The database is setup by the `docker-compose.yml` configuration and is seeded with two dispute records for the `dbradick2` user (see `postgres-seed-data.sql`.) Database schema is defined in `postgres-schema.sql` and the container is configured with `tmpfs` for the data directory so that the database is recreated between each restart. This was done to make sure we have an up to date schema running in the database. If you don't like this behavior just remove the `tmpfs` configuration._
 
 ## Submission
 
-Fork this repository on gitlab and spend up 2-3 hours implementing the feature requests in the challenge section. 
+Fork this repository on gitlab and spend up to 3 hours implementing the feature requests in the challenge section. 
 If you have time left to spend after implementing the features you can try to fix the reported bugs and / or address the developer / technical concerns. 
 
 Once you are finished with your work commit and push it to your forked repository. Invite the following gitlab users with at least the `Reporter` permission level (you invite users to your repository from the `Members` section. 
@@ -67,32 +68,33 @@ _A tick in the checkbox next to the feature means it has already been implemente
 
 - [x] **Login**  
     http://localhost:8080/login  
-    A a user I should be able to log in to the system with my username / password credentials.
-    If I'm idle for a certain time I should be logged out of the system automatically and redirected back
-    to the login screen.
+    As a user I should be able to log in to the system with my username / password credentials.  
+      
+    _AC1:_ If I'm idle for 15 minutes I should be logged out of the system automatically and redirected back to the login screen.
 
 - [x] **Transactions overview**  
     http://localhost:8080/  
-    As a Purchaser I would like to see a list of my recent most recent transactions and their current dispute status.
-    As a Admin I would like see a list of all purchasers most recent transactions and their current dispute status.
-    I should be able to click on a link that takes me to the transaction dispute details.
+    As a Purchaser I would like to see a list of my recent most recent transactions and their current dispute status.  
+       
+    As an Admin I would like see a list of all purchasers most recent transactions and their current dispute status.  
+      
+    _AC1:_ I should be able to click on a link that takes me to the transaction dispute details.
       
 - [x] **Transaction dispute details**  
     http://localhost:8080/dispute/?transaction_id=T8920719059    
-    As a user I should be able to view details for a specific transaction along with its current dispute status and
-    a log of historical dispute actions.
+    As a user I should be able to view details for a specific transaction along with its current dispute status and a log of historical dispute actions.
       
 - [ ] **Submit a dispute for a transaction**  
     As a Purchaser I should be able to submit a dispute for one of my transactions (from the details view.)   
       
     _AC1:_ Only negative transactions should be able to be disputed  
-    _AC2:_ Only transactions that have fulfill either of the following criterias should be able to be disputed:  
+    _AC2:_ Only transactions that have fulfill either of the following criteria should be able to be disputed:  
     _-_ Has not previously been disputed.  
-    _-_ Has the dispute status 'Rejected'.  
+    _-_ Currently has the dispute status 'Rejected'.  
     _AC3:_ A reason for the dispute must be provided when submitted, minimum 20 characters.
 
 - [ ] **Accept / Reject a transaction dispute**  
-    As a Admin I should be able to accept or reject a transaction dispute (from the details view.)   
+    As an Admin I should be able to accept or reject a transaction dispute (from the details view.)   
       
     _AC1:_ Only transactions with the dispute status 'Submitted' should be able to be accepted or rejected.
       
@@ -101,14 +103,14 @@ _A tick in the checkbox next to the feature means it has already been implemente
 
 The following bugs have been reported by users for the features already implemented:
 
-- [ ] A user have reported that she keeps getting logged out of the system every ~15-20 minutes or so even if she is active in the application.  
-- [ ] Several users has reported that the transaction dates shown in the overview and detail view doesn't always match when they did the purchase.
+- [ ] A user have reported that they keeps getting logged out of the system every 15 minutes or so even if they have been active in the application.  
+- [ ] Several users has reported that the transaction dates shown in the overview and detail view doesn't always match up with the date they made the purchase.
 
 ### Developer / technical concerns
 
 The following items have been raised by developers
 
-- [ ] There are no automated test suite for any of the features implemented.
+- [ ] There are no automated test suites for any of the features implemented.
 
 ## Mocked services
 
@@ -132,14 +134,14 @@ The following items have been raised by developers
                 "account_ids": [string, ...]
             },
             "token": string,
-            "token_issued": number,
-            "token_expires": number
+            "token_issued": number, # Timestamps in milliseconds relative to  
+            "token_expires": number # epoch January 1, 1970 00:00:00 UTC.
         }
     # For invalid credentials: (empty object response, still status code 200)
     response: 
         { }
 
-# Retreive user info and re-issued authentication token.
+# Retrieve user info and a refreshed authentication token.
 # Responds with 401 for an invalid or expired authentication token.
 'GET /api/authentication':
     headers: 
@@ -169,7 +171,7 @@ The following items have been raised by developers
                 "id": string,
                 "account_id": string,
                 "time": string, # ISO 8601 timestamp "YYYY-MM-DDTHH:mm:ssZ",
-                "amount": number, # In cents, negative for purchases and positve for credits / payments.
+                "amount": number, # In cents, negative for purchases and positive for credits / payments.
                 "description": string
             },
             ...

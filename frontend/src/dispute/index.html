@@ -65,8 +65,8 @@
                 ['account',         transaction.account_id],
                 ['description',     transaction.description],
                 ['amount',          (transaction.amount / 100).toFixed(2)],
-                ['dispute-status',  transaction.disputeStatus || ''],
-                ['dispute-reason',  transaction.disputeReason || ''],
+                ['dispute-status',  transaction.disputeStatus || ''],
+                ['dispute-reason',  transaction.disputeReason || ''],
             ]) {
                 document.getElementById(`transaction-${element}`).innerText = value;
             }

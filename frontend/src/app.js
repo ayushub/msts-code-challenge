@@ -42,7 +42,7 @@ function ifAuthenticated(callback) {
  * @param {{*}=} body
  */
 async function apiRequest(method, url, body) {
-    const token = sessionStorage.getItem('session_auth_token') || '';
+    const token = sessionStorage.getItem('session_auth_token') || '';
     const headers = { 'Authorization': `Bearer ${token}` };
 
     if (body != null) {
