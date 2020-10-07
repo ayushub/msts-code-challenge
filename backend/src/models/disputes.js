@@ -16,7 +16,7 @@ async function getByTransactionId(id, options) {
                     WHERE dispute_id = dispute.id AND is_current = TRUE
                 )
                 FROM dispute
-                WHERE transaction_id = $1`,
+                WHERE transaction_id = $1 AND is_current = TRUE`,
                 [id],
             );
 
@@ -50,7 +50,7 @@ async function listByTransactionIds(ids) {
                     WHERE dispute_id = dispute.id AND is_current = TRUE
                 )
                 FROM dispute
-                WHERE transaction_id = ANY($1)
+                WHERE transaction_id = ANY($1) AND is_current = TRUE
                 `,
                 [ids],
             );

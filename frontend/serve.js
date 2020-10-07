@@ -1,3 +1,14 @@
+
+/**
+ * This file is just to serve the UI assets for local development
+ * and to proxy any API requests to the backend services.
+ *
+ * In productions this would be handled by a reverse proxy like nginx
+ * or by a service like AWS Cloudfront.
+ *
+ * Uses same proxy middleware (http-proxy-middleware) as webpack-dev-server.
+ */
+
 const express = require('express');
 const { createProxyMiddleware: proxy } = require('http-proxy-middleware');
 

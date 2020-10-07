@@ -56,7 +56,7 @@ You can also optionally address any of the reported bugs or the developer / tech
   
 Feel free to replace or add whatever library / framework  you see fit or introduce a new language (`TypeScript`, `SCSS`, `Less` etc). You are also allowed to change the database model, or even database server as long as there is a docker image for it, if you feel that would help.  
 
-The only files that should remain exactly "as is" is `mocked-service.json` and `mocked-data.json` as they represent other micro services which your application integrating with and over which you don't have any control.  
+There is an exception however, the files `mocked-services.js` and `mocked-data.json` represent other micro services, which your application integrating with and over which you don't have any control. **Do not edit these two files, they should remain "as is"**.  
 
 Just make sure that the solution is still runnable by running `docker-compose up` and navigating to http://localhost:8080. As long as the `backend` and `frontend` may be started by the `yarn start` command in the respective folder this should work.  
 
