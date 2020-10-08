@@ -17,7 +17,6 @@ services:
     image: postgres:10.6-alpine
     stop_signal: SIGKILL
     environment:
-      POSTGRES_USER: dispute_center
       POSTGRES_PASSWORD: pwd01!
     volumes:
       - ./postgres-schema.sql:/docker-entrypoint-initdb.d/01.sql
@@ -42,9 +41,8 @@ services:
       AUTHENTICATION_SERVICE_BASE_URL: http://mocked-services:2000
       TRANSACTIONS_SERVICE_BASE_URL: http://mocked-services:2000
       PGHOST: database
-      PGUSER: dispute_center
+      PGUSER: postgres
       PGPASSWORD: pwd01!
-      PGDATABASE: dispute_center
     volumes:
       - ./backend:/app
     ports:

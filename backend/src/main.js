@@ -8,7 +8,6 @@ const {
 
 const server =
     express()
-        .use(express.json())
         .use(require('./middlewares/api-clients')({
             serviceBaseUrls: {
                 authentication: AUTHENTICATION_SERVICE_BASE_URL,
@@ -16,6 +15,10 @@ const server =
             },
             passOnAuthorizationHeader: true,
         }))
+        .use(require('./middlewares/authenticated-user')({
+            authenticationRequired: true,
+        }))
+        .use(express.json())
         .use(require('./routes/transactions'))
         .use(require('./routes/404'))
         .use(require('./middlewares/error-handler')({

@@ -33,9 +33,8 @@ The `database` container is configured to expose the standard `postgres` port `5
 
 ```yaml
 PGHOST: localhost
-PGUSER: dispute-center
+PGUSER: postgres
 PGPASSWORD: pwd01!
-PGDATABASE: dispute_center
 ```
 
 ## Run local environment without docker
