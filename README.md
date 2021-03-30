@@ -40,7 +40,7 @@ The database is setup by the `docker-compose.yml` configuration and is seeded wi
 
 ## Submission
 
-Fork this repository on gitlab and spend up to 3 hours implementing the feature requests in the challenge section. 
+Fork this repository on gitlab and spend up to 4 hours implementing the feature requests in the challenge section. 
 If you have time left to spend after implementing the features you can try to fix the reported bugs and / or address the developer / technical concerns. 
 
 Once you are finished with your work commit and push it to your forked repository. Invite the following gitlab users with at least the `Reporter` permission level (you invite users to your repository from the `Members` section. 
