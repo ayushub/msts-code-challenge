@@ -47,8 +47,9 @@ Once you are finished with your work commit and push it to your forked repositor
   
 - @mikwal-msts
 - @kkhan.msts
-- @dsojevicmsts
+- @david-ortega
 - @asdan.msts
+- @hyho-at-msts
 
 ## Challenge
 
