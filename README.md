@@ -50,6 +50,7 @@ If interviewing for an AU opportunity, invite the following GitLab users:
 - @mikwal-msts
 - @kkhan.msts
 - @david-ortega
+- @cphua
 - @asdan.msts
 - @hyho-at-msts
 
