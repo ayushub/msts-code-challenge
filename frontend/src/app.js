@@ -13,10 +13,12 @@ async function authenticate(credentials) {
     if (response.ok) {
         const {
             token,
+            token_expires,
             user: { role },
         } = await response.json();
         if (token) {
             sessionStorage.setItem("session_auth_token", token);
+            sessionStorage.setItem("session_auth_token_expiry", token_expires);
             sessionStorage.setItem("user_role", role);
             return true;
         }
@@ -38,8 +40,41 @@ function ifAuthenticated(callback) {
 }
 
 /**
+ * Check if the logged in user's token is about to expire
+ * @returns {boolean} `true` if token about to expire in 1 min, `false` otherwise
+ */
+async function checkAuthentication() {
+    const timeLeft =
+        sessionStorage.getItem("session_auth_token_expiry") - Date.now();
+    const TIMECHECK = 60000;
+    console.log("token in expiry =>", timeLeft);
+    if (timeLeft <= TIMECHECK) {
+        const response = await apiRequest(
+            "GET",
+            "/api/authentication",
+            null,
+            false
+        );
+        console.log("reauthenticated?");
+        if (response.token) {
+            sessionStorage.setItem("session_auth_token", response.token);
+            sessionStorage.setItem(
+                "session_auth_token_expiry",
+                response.token_expires
+            );
+            sessionStorage.setItem("user_role", response.role);
+            return true;
+        }
+        return false;
+    } else if (timeLeft > TIMECHECK) {
+        return true;
+    }
+    return false;
+}
+
+/**
  * Check if the logged in user's role is Admin
- * @returns {boolean} `true` if login attempt were successful, `false` otherwise
+ * @returns {boolean} `true` if role is Admin, `false` otherwise
  */
 function isAdmin() {
     if (sessionStorage.getItem("user_role") === "Admin") {
@@ -54,8 +89,10 @@ function isAdmin() {
  * @param {string} string
  * @param {string} url
  * @param {{*}=} body
+ * @param {boolean} checkAuth
  */
-async function apiRequest(method, url, body) {
+async function apiRequest(method, url, body, checkAuth = true) {
+    if (checkAuth) checkAuthentication();
     const token = sessionStorage.getItem("session_auth_token") || "";
     const headers = { Authorization: `Bearer ${token}` };
 
@@ -71,6 +108,7 @@ async function apiRequest(method, url, body) {
 
     if (response.status === 401) {
         sessionStorage.removeItem("session_auth_token");
+        sessionStorage.removeItem("session_auth_token_expiry");
         sessionStorage.removeItem("user_role");
         alert(`You have been logged out.`);
         window.location = "/login";

@@ -96,7 +96,7 @@ _NOTE: A tick in the checkbox next to the feature means it has already been impl
     http://localhost:8080/dispute/?transaction_id=T8920719059    
     As a user, I should be able to view details for a specific transaction including its' current dispute status and a log of historical dispute actions.
       
-- [ ] **Submit a dispute for a transaction**  
+- [x] **Submit a dispute for a transaction**  
     As a Purchaser, I should be able to submit a dispute for one of my transactions from the details view.
       
     _AC1:_ Only negative transactions should be able to be disputed  
@@ -105,7 +105,7 @@ _NOTE: A tick in the checkbox next to the feature means it has already been impl
     _-_ Currently has the dispute status 'Rejected'.  
     _AC3:_ A reason for the dispute must be provided when submitted. The reason has a minimum of 20 characters.
 
-- [ ] **Accept / Reject a transaction dispute**  
+- [x] **Accept / Reject a transaction dispute**  
     As an Admin, I should be able to accept or reject a transaction dispute from the details view.
       
     _AC1:_ Only transactions with the dispute status of 'Submitted' should be able to be accepted or rejected.
@@ -115,7 +115,7 @@ _NOTE: A tick in the checkbox next to the feature means it has already been impl
 
 The following bugs have been reported by users for the features already implemented:
 
-- [ ] A user has reported that they keep getting logged out of the system every 15 minutes or so even if they have been active in the application.  
+- [x] A user has reported that they keep getting logged out of the system every 15 minutes or so even if they have been active in the application.  
 - [ ] Several users have reported that the transaction dates shown in the overview and detail view don't always match up with the date they made the purchase.
 
 ### Developer / technical concerns
