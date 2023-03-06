@@ -41,6 +41,7 @@
                 <input type="text" id="transaction-identifier" class="hidden"/>
                 <input type="reason" id="reason" placeholder="Reason of dispute" />
                 <input type="submit" value="Dispute" />
+                <p id="reason-errors"></p>
             </form>
         </div>
 
@@ -123,12 +124,17 @@
             const ele = event.target.elements;
             const id = ele[0].value;
             const reason = ele[1].value;
-            const resp = await apiRequest('POST', `/api/dispute-center/transactions/${id}`, {
-                reason
-            });
-            console.log(resp);
-            console.log("dispute logged", id, reason);
-            location.reload()
+            if (reason.length < 20){
+                document.getElementById('reason-errors').innerText = "Reason must be atleast 20 characters long";
+            }
+            else {
+                const resp = await apiRequest('POST', `/api/dispute-center/transactions/${id}`, {
+                    reason
+                });
+                console.log(resp);
+                console.log("dispute logged", id, reason);
+                location.reload()
+            }
         }
 
         async function submitDisputeApproval(event) {
