@@ -11,9 +11,13 @@ async function authenticate(credentials) {
     });
 
     if (response.ok) {
-        const { token } = await response.json();
+        const {
+            token,
+            user: { role },
+        } = await response.json();
         if (token) {
             sessionStorage.setItem("session_auth_token", token);
+            sessionStorage.setItem("user_role", role);
             return true;
         }
     }
@@ -31,6 +35,17 @@ function ifAuthenticated(callback) {
         return;
     }
     callback();
+}
+
+/**
+ * Check if the logged in user's role is Admin
+ * @returns {boolean} `true` if login attempt were successful, `false` otherwise
+ */
+function isAdmin() {
+    if (sessionStorage.getItem("user_role") === "Admin") {
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -56,6 +71,7 @@ async function apiRequest(method, url, body) {
 
     if (response.status === 401) {
         sessionStorage.removeItem("session_auth_token");
+        sessionStorage.removeItem("user_role");
         alert(`You have been logged out.`);
         window.location = "/login";
         return Promise.reject(response);

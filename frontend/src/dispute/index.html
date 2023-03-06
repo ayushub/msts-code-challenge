@@ -92,12 +92,12 @@
             }
 
             // Show dispute form if conditions met
-            if (transaction.amount < 0 && [undefined,'Rejected'].includes(transaction.disputeStatus)){
+            if (!isAdmin() && transaction.amount < 0 && [undefined,'Rejected'].includes(transaction.disputeStatus)){
                 document.getElementById('transaction-identifier').value = transaction.id;
                 document.getElementById('dispute-form').classList.remove('hidden');
             }
 
-            if (transaction.disputeStatus === "Submitted"){
+            if (isAdmin() && transaction.disputeStatus === "Submitted"){
                 document.getElementById('dispute-identifier').value = dispute_status_log[0].dispute_id;
                 document.getElementById('dispute-approval-form').classList.remove('hidden');
             }
