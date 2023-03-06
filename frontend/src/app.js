@@ -4,22 +4,21 @@
  * @returns {boolean} `true` if login attempt were successful, `false` otherwise
  */
 async function authenticate(credentials) {
-    const response =
-        await fetch('/api/authentication', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(credentials)
-        });
+    const response = await fetch("/api/authentication", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+    });
 
     if (response.ok) {
         const { token } = await response.json();
         if (token) {
-            sessionStorage.setItem('session_auth_token', token);
+            sessionStorage.setItem("session_auth_token", token);
             return true;
         }
     }
 
-    return false
+    return false;
 }
 
 /**
@@ -27,8 +26,8 @@ async function authenticate(credentials) {
  * @param {() => void} callback
  */
 function ifAuthenticated(callback) {
-    if (!sessionStorage.getItem('session_auth_token')) {
-        window.location = '/login';
+    if (!sessionStorage.getItem("session_auth_token")) {
+        window.location = "/login";
         return;
     }
     callback();
@@ -42,11 +41,11 @@ function ifAuthenticated(callback) {
  * @param {{*}=} body
  */
 async function apiRequest(method, url, body) {
-    const token = sessionStorage.getItem('session_auth_token') || '';
-    const headers = { 'Authorization': `Bearer ${token}` };
+    const token = sessionStorage.getItem("session_auth_token") || "";
+    const headers = { Authorization: `Bearer ${token}` };
 
     if (body != null) {
-        headers['Content-Type'] = 'application/json';
+        headers["Content-Type"] = "application/json";
         body = JSON.stringify(body);
     }
 
@@ -56,15 +55,12 @@ async function apiRequest(method, url, body) {
     }
 
     if (response.status === 401) {
-        sessionStorage.removeItem('session_auth_token');
+        sessionStorage.removeItem("session_auth_token");
         alert(`You have been logged out.`);
-        window.location = '/login';
+        window.location = "/login";
         return Promise.reject(response);
     }
 
     alert(`Backend error: ${response.status}`);
     return Promise.reject(response);
 }
-
-
-

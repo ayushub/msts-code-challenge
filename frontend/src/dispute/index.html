@@ -36,6 +36,14 @@
             </tr>
         </table>
 
+        <div id="dispute-form" class="hidden">
+            <form onsubmit="submitDispute(event)">
+                <input type="text" id="transaction-identifier" class="hidden"/>
+                <input type="reason" id="reason" placeholder="Reason of dispute" />
+                <input type="submit" value="Dispute" />
+            </form>
+        </div>
+
         <div id="dispute-log" class="hidden">
             <h1>Dispute Log</h1>
             <table>
@@ -71,6 +79,13 @@
                 document.getElementById(`transaction-${element}`).innerText = value;
             }
 
+            // Show dispute form if conditions met
+            console.log(transaction)
+            if (transaction.amount < 0 && [undefined,'Rejected'].includes(transaction.disputeStatus)){
+                document.getElementById('transaction-identifier').value = transaction.id;
+                document.getElementById('dispute-form').classList.remove('hidden');
+            }
+
             // Show dispute status log section only if there are any entries
             if (dispute_status_log.length > 0) {
                 document.getElementById('dispute-log').classList.remove('hidden');
@@ -88,6 +103,18 @@
             }
         });
 
+        async function submitDispute(event) {
+            event.preventDefault();
+            const ele = event.target.elements;
+            const id = ele[0].value;
+            const reason = ele[1].value;
+            const resp = await apiRequest('POST', `/api/dispute-center/transactions/${id}`, {
+                reason
+            });
+            console.log(resp);
+            console.log("dispute logged", id, reason);
+            location.reload()
+        }
     </script>
 </body>
 
