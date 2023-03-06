@@ -60,6 +60,24 @@ routes.post(
     }
 );
 
+routes.post(
+    "/api/dispute-center/disputes/:id",
+    async (request, response, next) => {
+        try {
+            const disputeUpdated =
+                (await models.disputes.updateDispute(
+                    request.params.id,
+                    request.query.status,
+                    request.user.id
+                )) || {};
+
+            response.send({ disputeUpdated });
+        } catch (error) {
+            next(error);
+        }
+    }
+);
+
 routes.get(
     "/api/dispute-center/transactions/:id",
     async (request, response, next) => {

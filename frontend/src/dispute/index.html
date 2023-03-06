@@ -44,6 +44,17 @@
             </form>
         </div>
 
+        <div id="dispute-approval-form" class="hidden">
+            <form onsubmit="submitDisputeApproval(event)">
+                <input type="text" id="dispute-identifier" class="hidden"/>
+                <select name="status" id="status">
+                    <option value="Accepted">Accepted</option>
+                    <option value="Rejected">Rejected</option>
+                </select>
+                <input type="submit" value="Stamp it" />
+            </form>
+        </div>
+
         <div id="dispute-log" class="hidden">
             <h1>Dispute Log</h1>
             <table>
@@ -86,6 +97,11 @@
                 document.getElementById('dispute-form').classList.remove('hidden');
             }
 
+            if (transaction.disputeStatus === "Submitted"){
+                document.getElementById('dispute-identifier').value = dispute_status_log[0].dispute_id;
+                document.getElementById('dispute-approval-form').classList.remove('hidden');
+            }
+
             // Show dispute status log section only if there are any entries
             if (dispute_status_log.length > 0) {
                 document.getElementById('dispute-log').classList.remove('hidden');
@@ -113,6 +129,17 @@
             });
             console.log(resp);
             console.log("dispute logged", id, reason);
+            location.reload()
+        }
+
+        async function submitDisputeApproval(event) {
+            event.preventDefault();
+            const ele = event.target.elements;
+            const id = ele[0].value;
+            const status = ele[1].value;
+            const resp = await apiRequest('POST', `/api/dispute-center/disputes/${id}?status=${status}`);
+            console.log(resp);
+            console.log("dispute logged", id, status);
             location.reload()
         }
     </script>
