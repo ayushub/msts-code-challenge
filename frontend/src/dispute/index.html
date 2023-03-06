@@ -81,7 +81,7 @@
             // Bind values to transaction details table
             for (const [element, value] of [
                 ['id',              transaction.id],
-                ['date',            transaction.time.substr(0, 10)],
+                ['date',            new Date(transaction.time).toLocaleDateString()],
                 ['account',         transaction.account_id],
                 ['description',     transaction.description],
                 ['amount',          (transaction.amount / 100).toFixed(2)],

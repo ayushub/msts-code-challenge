@@ -36,7 +36,7 @@
                 html +=
                     `<tr>` +
                         `<td>${t.id}</td>` +
-                        `<td>${t.time.substr(0, 10)}</td>` +
+                        `<td>${new Date(t.time).toLocaleDateString()}</td>` +
                         `<td>${t.account_id}</td>` +
                         `<td>${t.description}</td>` +
                         `<td>${(t.amount / 100).toFixed(2)}</td>` +

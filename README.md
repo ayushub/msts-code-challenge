@@ -116,7 +116,7 @@ _NOTE: A tick in the checkbox next to the feature means it has already been impl
 The following bugs have been reported by users for the features already implemented:
 
 - [x] A user has reported that they keep getting logged out of the system every 15 minutes or so even if they have been active in the application.  
-- [ ] Several users have reported that the transaction dates shown in the overview and detail view don't always match up with the date they made the purchase.
+- [x] Several users have reported that the transaction dates shown in the overview and detail view don't always match up with the date they made the purchase.
 
 ### Developer / technical concerns
 
