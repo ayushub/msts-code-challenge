@@ -34,20 +34,6 @@ async function updateDispute(id, status, user_id) {
     const client = new pg.Client();
     await client.connect();
     try {
-        // const {
-        //     rows: [dispute],
-        // } = await client.query(
-        //     `
-        //         SELECT *, (
-        //             SELECT status FROM dispute_status_log
-        //             WHERE dispute_id = dispute.id AND is_current = TRUE
-        //         )
-        //         FROM dispute
-        //         WHERE transaction_id = $1 AND is_current = TRUE`,
-        //     [id]
-        // );
-
-        // if (dispute && options && options.includeStatusLog) {
         await client.query(
             `
                     UPDATE dispute_status_log
@@ -61,7 +47,6 @@ async function updateDispute(id, status, user_id) {
                 VALUES ($1, $2, $3, now(), TRUE) RETURNING *`,
             [id, status, user_id]
         );
-        // }
 
         return { disputeUpdated: true };
     } finally {

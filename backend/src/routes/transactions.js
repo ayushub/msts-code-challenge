@@ -65,11 +65,13 @@ routes.post(
     async (request, response, next) => {
         try {
             const disputeUpdated =
-                (await models.disputes.updateDispute(
-                    request.params.id,
-                    request.query.status,
-                    request.user.id
-                )) || {};
+                request.user.role !== "Admin"
+                    ? {}
+                    : (await models.disputes.updateDispute(
+                          request.params.id,
+                          request.query.status,
+                          request.user.id
+                      )) || {};
 
             response.send({ disputeUpdated });
         } catch (error) {

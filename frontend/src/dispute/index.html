@@ -91,7 +91,6 @@
             }
 
             // Show dispute form if conditions met
-            console.log(transaction)
             if (transaction.amount < 0 && [undefined,'Rejected'].includes(transaction.disputeStatus)){
                 document.getElementById('transaction-identifier').value = transaction.id;
                 document.getElementById('dispute-form').classList.remove('hidden');
